@@ -84,6 +84,11 @@
 let baselineBeta = 0;
 let baselineGamma = 0;
 
+// Clamp helper
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
 // Mouse move parallax
 poster.addEventListener('mousemove', (e) => {
   const { offsetWidth: width, offsetHeight: height } = poster;
@@ -111,6 +116,9 @@ function handleOrientation(e) {
     baselineBeta = e.beta;
     baselineGamma = e.gamma;
   }
+
+    // Clamp gamma to avoid snapping
+    let gamma = clamp(e.gamma, -45, 45);
 
   const x = (e.gamma - baselineGamma) / 50; // Adjust scaling factor as needed
   const y = (e.beta - baselineBeta) / 50;
