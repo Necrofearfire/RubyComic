@@ -112,16 +112,16 @@ function handleOrientation(e) {
     baselineGamma = e.gamma;
   }
 
-  const x = (e.gamma - baselineGamma) / 30; // Adjust scaling factor as needed
-  const y = (e.beta - baselineBeta) / 30;
+  const x = (e.gamma - baselineGamma) / 50; // Adjust scaling factor as needed
+  const y = (e.beta - baselineBeta) / 50;
   moveLayers(x, y);
 }
 
 function moveLayers(x, y) {
   layers.forEach(layer => {
-    const speed = layer.dataset.speed;
-    const translateX = -x * speed * 10;
-    const translateY = -y * speed * 10;
+    const speed = layer.dataset.speed / 5;
+    const translateX = -x * speed;
+    const translateY = -y * speed;
     layer.style.transform = `translate(${translateX}px, ${translateY}px)`;
   });
 }
