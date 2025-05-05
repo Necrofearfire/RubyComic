@@ -118,7 +118,7 @@ function handleOrientation(e) {
   }
 
     // Clamp gamma to avoid snapping
-    let gamma = clamp(e.gamma, -45, 45);
+    let gamma = clamp(e.gamma, -20, 20);
 
   const x = (e.gamma - baselineGamma) / 50; // Adjust scaling factor as needed
   const y = (e.beta - baselineBeta) / 50;
