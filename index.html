@@ -16,8 +16,8 @@
 
     .poster {
       position: relative;
-      width: 576px;
-      height: 720px;
+      width: 800px;
+      height: 1000px;
       overflow: hidden;
       /* outline: 2rem solid white;
       box-sizing: border-box; */
@@ -72,6 +72,35 @@
       50%  { transform: rotate(180deg); } /* pause holding at 180° */
       75%  { transform: rotate(360deg); } /* pause holding at 180° */
       100% { transform: rotate(360deg); }
+    }
+
+    .motion-button {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 10px; /* Increased padding */
+      font-size: 24px;    /* Increased font size */
+      font-weight: bold;
+      color: #fff;
+      background-color: #e53935;
+      border: 2px solid #fff;
+      border-radius: 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 1000;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      text-transform: uppercase;
+    }
+
+    .motion-button:hover {
+      background-color: #d32f2f;
+      transform: translateX(-50%) scale(1.05);
+    }
+
+    .motion-button:active {
+      background-color: #b71c1c;
+      transform: translateX(-50%) scale(0.98);
     }
   </style>
 </head>
@@ -225,13 +254,14 @@ function moveLayers(x, y) {
 if (/Mobi|Android/i.test(navigator.userAgent)) {
   const button = document.createElement('button');
   button.textContent = 'Enable Motion';
-  button.style.position = 'fixed';
-  button.style.bottom = '20px';
-  button.style.left = '50%';
-  button.style.transform = 'translateX(-50%)';
-  button.style.padding = '10px 20px';
-  button.style.fontSize = '18px';
-  button.style.zIndex = '1000';
+  // button.style.position = 'fixed';
+  // button.style.bottom = '20px';
+  // button.style.left = '50%';
+  // button.style.transform = 'translateX(-50%)';
+  // button.style.padding = '10px 20px';
+  // button.style.fontSize = '18px';
+  // button.style.zIndex = '1000';
+  button.className = 'motion-button';
   document.body.appendChild(button);
   button.addEventListener('click', () => {
     baselineBeta = null; // Reset baseline on each enable
