@@ -46,11 +46,43 @@
       pointer-events: none;
       will-change: transform; 
     }
+
+    #loadingScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    #loadingIcon {
+      width: 100px;
+      height: 100px;
+      animation: spin 3s linear infinite;
+    }
+
+    @keyframes spin {
+      0%   { transform: rotate(0deg); }
+      25%  { transform: rotate(180deg); }
+      50%  { transform: rotate(180deg); } /* pause holding at 180° */
+      75%  { transform: rotate(360deg); } /* pause holding at 180° */
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
+
+  <div id="loadingScreen">
+    <!-- <img src="/Layers/black-widow_logo-freelogovectors.net_.png" id="loadingIcon" alt="Loading"> -->
+    <img src="Layers/black-widow_logo-freelogovectors.net_.png" id="loadingIcon" alt="Loading">
+  </div>
   <div class="poster">
-    <img src="Layers/IMG_1659.PNG" class="layer" data-speed="0">
+    <!-- <img src="Layers/IMG_1659.PNG" class="layer" data-speed="0">
     <img src="Layers/IMG_1664.PNG" class="layer" data-speed="5">
     <img src="Layers/IMG_1665.PNG" class="layer" data-speed="10">
     <img src="Layers/IMG_1660.PNG" class="layer" data-speed="25">
@@ -61,7 +93,39 @@
     <img src="Layers/IMG_1667.PNG" class="layer" data-speed="40">
     <img src="Layers/IMG_1668.PNG" class="layer" data-speed="45">
     <img src="Layers/IMG_1669.PNG" class="layer" data-speed="50">
-    <img src="Layers/borderImage.png" class="layer" data-speed="0">
+    <img src="Layers/borderImage.png" class="layer" data-speed="0"> -->
+
+    <!-- <img src="/Layers/layer1.png" class="layer" data-speed="0">
+    <img src="/Layers/layer2.png" class="layer" data-speed="5">
+    <img src="/Layers/layer3.png" class="layer" data-speed="10">
+    <img src="/Layers/layer4.png" class="layer" data-speed="25">
+    <img src="/Layers/layer5.png" class="layer" data-speed="20">
+    <img src="/Layers/layer6.png" class="layer" data-speed="60">
+    <img src="/Layers/layer7.png" class="layer" data-speed="30">
+    <img src="/Layers/layer8.png" class="layer" data-speed="25">
+    <img src="/Layers/layer9.png" class="layer" data-speed="30">
+    <img src="/Layers/layer10.png" class="layer" data-speed="120">
+    <img src="/Layers/layer11.png" class="layer" data-speed="140">
+    <img src="/Layers/layer12.png" class="layer" data-speed="100">
+    <img src="/Layers/layer13.png" class="layer" data-speed="70">
+    <img src="/Layers/layer14.png" class="layer" data-speed="75">
+    <img src="/Layers/layer15.png" class="layer" data-speed="0"> -->
+
+    <img src="Layers/layer1.png" class="layer" data-speed="0">
+    <img src="Layers/layer2.png" class="layer" data-speed="5">
+    <img src="Layers/layer3.png" class="layer" data-speed="10">
+    <img src="Layers/layer4.png" class="layer" data-speed="25">
+    <img src="Layers/layer5.png" class="layer" data-speed="20">
+    <img src="Layers/layer6.png" class="layer" data-speed="60">
+    <img src="Layers/layer7.png" class="layer" data-speed="30">
+    <img src="Layers/layer8.png" class="layer" data-speed="25">
+    <img src="Layers/layer9.png" class="layer" data-speed="30">
+    <img src="Layers/layer10.png" class="layer" data-speed="120">
+    <img src="Layers/layer11.png" class="layer" data-speed="140">
+    <img src="Layers/layer12.png" class="layer" data-speed="100">
+    <img src="Layers/layer13.png" class="layer" data-speed="70">
+    <img src="Layers/layer14.png" class="layer" data-speed="75">
+    <img src="Layers/layer15.png" class="layer" data-speed="0">
   </div>
 
   <script>
@@ -83,7 +147,30 @@
 // Mouse move parallax
 let baselineBeta = 0;
 let baselineGamma = 0;
+const loadingScreen = document.getElementById('loadingScreen');
 
+let imagesLoaded = 0;
+
+layers.forEach(layer => {
+  if (layer.complete) {
+    imagesLoaded++;
+    if (imagesLoaded === layers.length) hideLoadingScreen();
+  } else {
+    layer.addEventListener('load', () => {
+      imagesLoaded++;
+      if (imagesLoaded === layers.length) hideLoadingScreen();
+    });
+  }
+});
+
+function hideLoadingScreen() {
+  moveLayers(0, 0); // center the layers initially
+  loadingScreen.classList.add('fade-out');
+  setTimeout(() => {
+    loadingScreen.style.display = 'none';
+  }, 500);
+  // loadingScreen.style.display = 'none';
+}
 // Clamp helper
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
@@ -137,7 +224,7 @@ function moveLayers(x, y) {
 // Only show motion button on mobile
 if (/Mobi|Android/i.test(navigator.userAgent)) {
   const button = document.createElement('button');
-  button.textContent = 'Enable Motion Parallax';
+  button.textContent = 'Enable Motion';
   button.style.position = 'fixed';
   button.style.bottom = '20px';
   button.style.left = '50%';
